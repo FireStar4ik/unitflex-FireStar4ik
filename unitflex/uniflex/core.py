@@ -1,27 +1,36 @@
-from . import temperature
-from . import currency
-from . import distance
+from uniflex.currency import dtoe, etod
+from uniflex.temperature import ctof, ftoc
+from uniflex.distance import kmtom, mtokm
+
 def convert(domain: str, from_unit: str, to_unit: str, value: float) -> float:
+    domain = domain.lower()
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
+
+    print(f"[DEBUG] domain={domain}, from={from_unit}, to={to_unit}")
+
     if domain == "temperature":
         if from_unit == "celsius" and to_unit == "fahrenheit":
-            return temperature.ctof(value)
+            return ctof(value)
         elif from_unit == "fahrenheit" and to_unit == "celsius":
-            return temperature.ftoc(value)
-        else:
-            raise ValueError("Unsupported temperature conversion")
-    elif domain == "currency":
-        if from_unit == "dollar" and to_unit == "euro":
-            return currency.dtoe(value)
-        elif from_unit == "euro" and to_unit == "dollar":
-            return currency.etod(value)
-        else:
-            raise ValueError("Unsupported currency conversion")
+            return ftoc(value)
+
     elif domain == "distance":
-        if from_unit == "km" and to_unit == "mile":
-            return distance.kmtom(value)
-        elif from_unit == "mile" and to_unit == "km":
-            return distance.mtokm(value)
+        if from_unit == "kilometers" and to_unit == "miles":
+            return kmtom(value)
+        elif from_unit == "miles" and to_unit == "kilometers":
+            return mtokm(value)
+
+    elif domain == "currency":
+        if from_unit == "usd" and to_unit == "eur":
+            return dtoe(value)
+        elif from_unit == "eur" and to_unit == "usd":
+            return etod(value)
         else:
-            raise ValueError("Unsupported distance conversion")
-    else:
-        raise ValueError("Unsupported domain")
+            raise ValueError(f"Unsupported currency conversion: {from_unit} → {to_unit}")
+
+
+    print(f"Got: domain={domain}, from={from_unit}, to={to_unit}")
+    raise ValueError("Unsupported conversion")
+
+
