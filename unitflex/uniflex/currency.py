@@ -1,5 +1,13 @@
-def dtoe(d):
-    return d * 0.9
+import urllib.request
+import json
 
-def etod(e):
-    return  e / 0.9
+DEFAULT_RATE = 0.9
+
+def get_rate(from_currency, to_currency):
+    url = f"https://api.exchangerate.host/convert?from={from_currency}&to={to_currency}"
+    try:
+        with urllib.request.urlopen(url) as response:
+            data = json.loads(response.read())
+            return data['rates'].get(to_currency, DEFAULT_RATE)
+    except Exception:
+        return DEFAULT_RATE
