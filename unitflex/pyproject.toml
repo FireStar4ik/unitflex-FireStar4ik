@@ -1,0 +1,14 @@
+[project]
+name = "uniflex"
+version = "0.1.0"
+description = "Unit conversion tool"
+authors = [{name = "Nurali"}]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pytest>=8.3.5",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
