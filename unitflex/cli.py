@@ -1,11 +1,8 @@
 import sys
 from uniflex import convert
 
-if __name__ == "__main__":
-    if len(sys.argv) != 5:
-        print("Usage: python cli.py <domain> <from_unit> <to_unit> <value>")
-        sys.exit(1)
 
+if __name__ == "__main__":
     domain, from_unit, to_unit, value = sys.argv[1], sys.argv[2], sys.argv[3], float(sys.argv[4])
     
     try:
