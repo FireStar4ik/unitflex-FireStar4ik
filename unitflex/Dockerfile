@@ -1,21 +1,21 @@
-FROM python:3.11-slim
 
-# Set working directory inside container
+FROM python:3.11-alpine as builder
+WORKDIR /app
+RUN apk add --no-cache gcc musl-dev libffi-dev
+
+COPY pyproject.toml .
+COPY uniflex/ ./uniflex/
+COPY cli.py .
+
+RUN pip install --no-cache-dir --prefix=/install requests . && \
+    apk del gcc musl-dev libffi-dev
+
+FROM python:3.11-alpine
+
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y curl && \
-    rm -rf /var/lib/apt/lists/*
+COPY --from=builder /install /usr/local
+COPY uniflex/ ./uniflex/
+COPY cli.py .
 
-# Install runtime Python dependencies
-RUN pip install requests
-
-# Copy everything from unitflex/ into container
-COPY . .
-
-# Install package (in editable mode)
-RUN pip install -e .
-
-# Set CLI as entrypoint
 ENTRYPOINT ["python", "cli.py"]

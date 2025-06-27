@@ -3,3 +3,7 @@ __pycache__/
 .venv/
 tests/
 dist/
+*.egg-info/
+uv.lock
+my.py
+.pytest_cache/

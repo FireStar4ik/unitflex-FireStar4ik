@@ -1,5 +1,5 @@
 import sys
-from uniflex import convert
+from unitflex import convert
 
 
 if __name__ == "__main__":
